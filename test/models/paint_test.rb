@@ -10,4 +10,9 @@ class PaintTest < ActiveSupport::TestCase
     paint = Paint.new(:stock => 7)
     assert paint.stock == 7
   end
+
+  test 'it should have a status' do
+    paint = Paint.new(:status => 'available')
+    assert paint.status == 'available'
+  end
 end
