@@ -1,5 +1,7 @@
 class PaintsController < ApplicationController
+  before_action :authenticate_user!
   before_action :set_paint, only: %i[ show update destroy ]
+
 
   # GET /paints
   def index
