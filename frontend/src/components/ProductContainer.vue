@@ -8,7 +8,7 @@
         <div>{{ stock }}</div>
       </v-col>
       <v-col>
-        <div>{{ status }}</div>
+        <v-chip :color="getColourForStatus()">{{ status }}</v-chip>
       </v-col>
     </v-row>
   </div>
@@ -20,6 +20,20 @@ export default {
     colour: String,
     stock: Number,
     status: String,
+  },
+  methods: {
+    getColourForStatus() {
+      switch (this.status) {
+        case 'running low':
+          return 'yellow'
+        case 'available':
+          return 'green'
+        case 'out of stock':
+          return 'red'
+        default:
+          return 'purple'
+      }
+    }
   }
 }
 </script>
