@@ -5,10 +5,10 @@
         <div>{{ colour }}</div>
       </v-col>
       <v-col>
-        <div>{{ stock }}</div>
+        <v-chip :color="getColourForStatus()">{{ status }}</v-chip>
       </v-col>
       <v-col>
-        <v-chip :color="getColourForStatus()">{{ status }}</v-chip>
+        <div>{{ stock }}</div>
       </v-col>
     </v-row>
   </div>

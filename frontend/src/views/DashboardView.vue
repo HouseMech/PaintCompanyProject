@@ -19,6 +19,9 @@ export default {
     paints() {
       return this.$store.getters['paints/paints']
     }
+  },
+  mounted() {
+    this.getPaints()
   }
 }
 </script>

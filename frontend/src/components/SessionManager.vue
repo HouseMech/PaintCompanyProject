@@ -47,6 +47,16 @@ export default {
       this.loginEmail = ""
       this.loginPassword = ""
     },
+  },
+  watch: {
+    isLoggedIn(isTrue) {
+      if (isTrue) {
+        this.$router.push({
+          path: '/',
+          replace: true
+        })
+      }
+    }
   }
 }
 </script>
