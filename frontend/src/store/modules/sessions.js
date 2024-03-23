@@ -1,4 +1,4 @@
-import axios from "axios";
+import axios from "axios"
 
 const BASE_URL = "http://localhost:3000/"
 
@@ -86,7 +86,7 @@ const mutations = {
     state.auth_token = localStorage.getItem('auth_token')
   },
   resetUserInfo(state) {
-    Object.assign(state, getDefaultState());
+    Object.assign(state, getDefaultState())
     axios.defaults.headers.common['Authorization'] = null
   }
 }
@@ -96,4 +96,4 @@ export default {
   getters,
   actions,
   mutations,
-};
+}

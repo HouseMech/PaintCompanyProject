@@ -1,6 +1,7 @@
 import { createStore } from 'vuex'
-import sessionManager from './modules/session_manager.js';
+import sessions from './modules/sessions.js'
+import paints from './modules/paints.js'
 
 export default createStore({
-  modules: { sessionManager },
+  modules: { sessions, paints },
 })

@@ -33,7 +33,7 @@ export default {
   methods: {
     ...mapActions(['loginUser', 'logoutUser']),
     onLogin(event) {
-      event.preventDefault();
+      event.preventDefault()
       let data = {
         user: {
           email: this.loginEmail,
@@ -44,8 +44,8 @@ export default {
       this.resetData()
     },
     resetData() {
-      this.loginEmail = "";
-      this.loginPassword = "";
+      this.loginEmail = ""
+      this.loginPassword = ""
     },
   }
 }
