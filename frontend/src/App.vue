@@ -1,7 +1,7 @@
 <template>
   <v-app>
     <v-main>
-      <HelloWorld />
+      <ProductContainer colour="Gray" :stock="34" status="available" />
     </v-main>
 
     <AppFooter />
@@ -9,5 +9,5 @@
 </template>
 
 <script setup>
-  //
+import ProductContainer from './components/ProductContainer.vue';
 </script>
