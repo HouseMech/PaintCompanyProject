@@ -23,7 +23,7 @@ const router = createRouter({
 
 router.beforeEach((to, from, next) => {
   const requiresAuth = to.matched.some((x) => x.meta.requiresAuth)
-  const isLoggedIn = store.getters['isLoggedIn']
+  const isLoggedIn = store.getters['sessions/isLoggedIn']
   if (requiresAuth) {
     if (isLoggedIn) {
       next()

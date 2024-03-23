@@ -28,10 +28,10 @@ export default {
     }
   },
   computed: {
-    ...mapGetters(["getAuthToken", "getUserEmail", "getUserID", "isLoggedIn"]),
+    ...mapGetters({ getAuthToken: "sessions/getAuthToken", getUserEmail: "sessions/getUserEmail", getUserID: "sessions/getUserID", isLoggedIn: "sessions/isLoggedIn" }),
   },
   methods: {
-    ...mapActions(['loginUser', 'logoutUser']),
+    ...mapActions({ loginUser: 'sessions/loginUser', logoutUser: 'sessions/logoutUser' }),
     onLogin(event) {
       event.preventDefault()
       let data = {
