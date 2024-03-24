@@ -32,6 +32,26 @@ const actions = {
       })
     })
   },
+  updatePaint({ rootGetters }, { id, stock, status }) {
+    return new Promise((resolve, reject) => {
+      const config = {
+        headers: {
+          authorization: rootGetters['sessions/getAuthToken']
+        }
+      }
+      axios.patch(`http://localhost:3000/paints/${id}`, {
+        paint: {
+          status: status,
+          stock: stock
+        }
+      }, config)
+        .then((response) => {
+          resolve(response)
+        }).catch((error) => {
+          reject(error)
+        })
+    })
+  }
 }
 
 const mutations = {
