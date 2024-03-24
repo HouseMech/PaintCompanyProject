@@ -1,9 +1,5 @@
 class PaintsController < ApplicationController
-  before_action :authenticate_user!
   before_action :set_paint, only: %i[ show update destroy ]
-  before_action :check_painter, only: [:update]
-  before_action :check_admin, only: [:destroy]
-
 
   # GET /paints
   def index
@@ -31,14 +27,6 @@ class PaintsController < ApplicationController
   # PATCH/PUT /paints/1
   def update
     if @paint.update(paint_params)
-      Pusher.trigger('paint-channel','update-paint', {
-        paint: {
-          id: @paint.id,
-          colour: @paint.colour,
-          status: @paint.status,
-          stock: @paint.stock
-        }
-      })
       render json: @paint
     else
       render json: @paint.errors, status: :unprocessable_entity
@@ -58,14 +46,6 @@ class PaintsController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def paint_params
-      params.require(:paint).permit(:status, :stock)
-    end
-
-    def check_painter
-      render json: { error: "Not authorized" }, status: :forbidden unless current_user.painter? || current_user.admin?
-    end
-
-    def check_admin
-      render json: { error: "Not authorized" }, status: :forbidden unless current_user.admin?
+      params.require(:paint).permit(:colour, :stock, :status)
     end
 end

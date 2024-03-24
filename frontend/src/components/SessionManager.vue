@@ -7,14 +7,13 @@
       <div>{{ this.getAuthToken }}</div>
     </div>
     <div v-else>
-      <v-form @submit.prevent="onLogin">
-        <v-text-field v-model="loginEmail" label="Email"></v-text-field>
-
-        <v-text-field v-model="loginPassword" :append-icon="showPassword ? 'mdi-eye' : 'mdi-eye-off'"
-          :type="showPassword ? 'text' : 'password'" counter placeholder="Password"
-          @click:append="showPassword = !showPassword"></v-text-field>
-        <v-btn class="mt-2" type="submit" color="blue-darken-4" block>Submit</v-btn>
-      </v-form>
+      <form @submit="onLogin" class="login-form">
+        <input class="login-form-email" type="text" v-model="loginEmail" placeholder="Email" />
+        <br />
+        <input class="login-form-password" type="password" v-model="loginPassword" placeholder="Password" />
+        <br />
+        <input type="submit" value="Login" class="login-form-submit" />
+      </form>
     </div>
   </div>
 </template>
@@ -24,16 +23,15 @@ import { mapActions, mapGetters } from 'vuex'
 export default {
   data() {
     return {
-      showPassword: false,
       loginEmail: "",
       loginPassword: ""
     }
   },
   computed: {
-    ...mapGetters({ getAuthToken: "sessions/getAuthToken", getUserEmail: "sessions/getUserEmail", getUserID: "sessions/getUserID", isLoggedIn: "sessions/isLoggedIn" }),
+    ...mapGetters(["getAuthToken", "getUserEmail", "getUserID", "isLoggedIn"]),
   },
   methods: {
-    ...mapActions({ loginUser: 'sessions/loginUser', logoutUser: 'sessions/logoutUser' }),
+    ...mapActions(['loginUser', 'logoutUser']),
     onLogin(event) {
       event.preventDefault()
       let data = {
@@ -49,16 +47,6 @@ export default {
       this.loginEmail = ""
       this.loginPassword = ""
     },
-  },
-  watch: {
-    isLoggedIn(isTrue) {
-      if (isTrue) {
-        this.$router.push({
-          path: '/',
-          replace: true
-        })
-      }
-    }
   }
 }
 </script>

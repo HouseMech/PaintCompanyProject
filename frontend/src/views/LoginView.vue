@@ -1,12 +1,7 @@
 <template>
-  <v-sheet class="mx-auto" width="300">
-    <v-card>
-      <v-card-title>Login</v-card-title>
-      <v-card-text>
-        <SessionManager />
-      </v-card-text>
-    </v-card>
-  </v-sheet>
+  <div>
+    <SessionManager />
+  </div>
 </template>
 
 <script>
