@@ -18,8 +18,8 @@ export default {
     }
   },
   created() {
-    var pusher = new Pusher('5966b6fdb432f7002104', {
-      cluster: 'us3',
+    var pusher = new Pusher(import.meta.env["VITE_pusher_key"], {
+      cluster: import.meta.env["VITE_pusher_cluster"],
       encrypted: true
     })
 

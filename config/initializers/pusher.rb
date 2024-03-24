@@ -1,8 +1,8 @@
 require 'pusher'
 
-Pusher.app_id = 'YOUR_APP_ID'
-Pusher.key = 'YOUR_APP_KEY'
-Pusher.secret = 'YOUR_APP_SECRET'
-Pusher.cluster = 'YOUR_APP_CLUSTER'
+Pusher.app_id = Rails.application.credentials.pusher.app_id
+Pusher.key = Rails.application.credentials.pusher.key
+Pusher.secret = Rails.application.credentials.pusher.secret
+Pusher.cluster = Rails.application.credentials.pusher.cluster
 Pusher.logger = Rails.logger
 Pusher.encrypted = true

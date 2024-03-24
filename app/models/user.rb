@@ -8,4 +8,14 @@ class User < ApplicationRecord
   devise :database_authenticatable, :registerable,
          :jwt_authenticatable,
          jwt_revocation_strategy: JwtDenylist
+
+  def active_for_authentication?
+    # Super is necessary per the devise documents
+    # is_active is what we'll look at to see if a user account should be allowed to sign in or not.
+    super and self.is_active?
+  end
+
+  def inactive_message
+    "Your account is deactivated."
+  end
 end

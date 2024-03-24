@@ -29,14 +29,14 @@ const getters = {
     const loggedOut = state.auth_token == null || state.auth_token == JSON.stringify(null)
     return !loggedOut
   },
-  getUserRole() {
+  getUserRole(state) {
     return state.user?.role
   }
 }
 
 const actions = {
   loginUser({ commit }, payload) {
-    new Promise((resolve, reject) => {
+    return new Promise((resolve, reject) => {
       axios.post(`${BASE_URL}users/sign_in`, payload).then((response) => {
         commit('SET_USER_INFO', response)
         resolve(response)
@@ -55,6 +55,9 @@ const actions = {
       axios.delete(`${BASE_URL}users/sign_out`, config).then(() => {
         commit('RESET_USER_INFO')
         commit("paints/RESET_STATE", null, {
+          root: true
+        })
+        commit("admin/RESET_STATE", null, {
           root: true
         })
         resolve()
@@ -84,7 +87,6 @@ const mutations = {
   SET_USER_INFO(state, payload) {
     state.user = payload.data.user
     state.auth_token = payload.headers.authorization
-    axios.defaults.headers.common['Authorization'] = payload.headers.authorization
     localStorage.setItem('auth_token', payload.headers.authorization)
   },
   SET_USER_INFO_FROM_TOKEN(state, payload) {
@@ -93,7 +95,6 @@ const mutations = {
   },
   RESET_USER_INFO(state) {
     Object.assign(state, getDefaultState())
-    axios.defaults.headers.common['Authorization'] = null
   }
 }
 

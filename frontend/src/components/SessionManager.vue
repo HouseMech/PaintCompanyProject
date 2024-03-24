@@ -1,21 +1,21 @@
 <template>
   <div>
-    <div v-if="isLoggedIn">
-      <v-btn @click="logoutUser">Logout</v-btn>
-      <div>{{ this.getUserID }}</div>
-      <div>{{ this.getUserEmail }}</div>
-      <div>{{ this.getAuthToken }}</div>
-    </div>
-    <div v-else>
-      <v-form @submit.prevent="onLogin">
-        <v-text-field v-model="loginEmail" label="Email"></v-text-field>
+    <v-row v-if="formError">
+      <v-alert color="error" icon="$error" :text="formError"></v-alert>
+    </v-row>
+    <v-row>
+      <v-col>
+        <v-form v-model="form" @submit.prevent="onLogin">
+          <v-text-field v-model="loginEmail" :rules="[rules.required]" label="Email"></v-text-field>
 
-        <v-text-field v-model="loginPassword" :append-icon="showPassword ? 'mdi-eye' : 'mdi-eye-off'"
-          :type="showPassword ? 'text' : 'password'" counter placeholder="Password"
-          @click:append="showPassword = !showPassword"></v-text-field>
-        <v-btn class="mt-2" type="submit" color="blue-darken-4" block>Submit</v-btn>
-      </v-form>
-    </div>
+          <v-text-field v-model="loginPassword" :append-icon="showPassword ? 'mdi-eye' : 'mdi-eye-off'"
+            :type="showPassword ? 'text' : 'password'" :rules="[rules.required]" counter placeholder="Password"
+            @click:append="showPassword = !showPassword" clearable></v-text-field>
+          <v-btn class="mt-2" type="submit" color="blue-darken-4" :loading="loading" :disabled="!form"
+            block>Submit</v-btn>
+        </v-form>
+      </v-col>
+    </v-row>
   </div>
 </template>
 
@@ -26,7 +26,13 @@ export default {
     return {
       showPassword: false,
       loginEmail: "",
-      loginPassword: ""
+      loginPassword: "",
+      formError: "",
+      rules: {
+        required: value => !!value || 'Field is required',
+      },
+      form: false,
+      loading: false
     }
   },
   computed: {
@@ -42,12 +48,21 @@ export default {
           password: this.loginPassword
         }
       }
-      this.loginUser(data)
-      this.resetData()
+      this.loading = true
+      this.loginUser(data).then(() => {
+        this.resetData()
+      }).catch((error) => {
+        console.log(error)
+        this.formError = error.response.data
+      }).finally(() => {
+        this.loading = false
+      })
+
     },
     resetData() {
-      this.loginEmail = ""
-      this.loginPassword = ""
+      this.formError = ''
+      this.loginEmail = ''
+      this.loginPassword = ''
     },
   },
   watch: {

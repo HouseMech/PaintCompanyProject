@@ -133,7 +133,7 @@ export default {
           this.close()
         }
       }).catch((error) => {
-        this.formError = "Something went wrong"
+        this.formError = "Error" + JSON.stringify(error.response.data)
         console.log(error)
       })
     },
