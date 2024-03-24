@@ -1,8 +1,6 @@
 <template>
   <div>
-    <div v-for="paint in paints">
-      <ProductContainer :colour="paint.colour" :stock="paint.stock" :status="paint.status" />
-    </div>
+    <ProductsTable :paints="paints" />
   </div>
 </template>
 
