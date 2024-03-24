@@ -35,7 +35,7 @@ const actions = {
   loginUser({ commit }, payload) {
     new Promise((resolve, reject) => {
       axios.post(`${BASE_URL}users/sign_in`, payload).then((response) => {
-        commit('setUserInfo', response)
+        commit('SET_USER_INFO', response)
         resolve(response)
       }).catch((error) => {
         reject(error)
@@ -50,7 +50,7 @@ const actions = {
     }
     new Promise((resolve, reject) => {
       axios.delete(`${BASE_URL}users/sign_out`, config).then(() => {
-        commit('resetUserInfo')
+        commit('RESET_USER_INFO')
         resolve()
       }).catch((error) => {
         reject(error)
@@ -65,7 +65,7 @@ const actions = {
     }
     new Promise((resolve, reject) => {
       axios.get(`${BASE_URL}user-data`, config).then((response) => {
-        commit('setUserInfoFromToken', response)
+        commit('SET_USER_INFO_FROM_TOKEN', response)
         resolve(response)
       }).catch((error) => {
         reject(error)
@@ -75,17 +75,17 @@ const actions = {
 }
 
 const mutations = {
-  setUserInfo(state, payload) {
+  SET_USER_INFO(state, payload) {
     state.user = payload.data.user
     state.auth_token = payload.headers.authorization
     axios.defaults.headers.common['Authorization'] = payload.headers.authorization
     localStorage.setItem('auth_token', payload.headers.authorization)
   },
-  setUserInfoFromToken(state, payload) {
+  SET_USER_INFO_FROM_TOKEN(state, payload) {
     state.user = payload.data.user
     state.auth_token = localStorage.getItem('auth_token')
   },
-  resetUserInfo(state) {
+  RESET_USER_INFO(state) {
     Object.assign(state, getDefaultState())
     axios.defaults.headers.common['Authorization'] = null
   }

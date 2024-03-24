@@ -25,7 +25,7 @@ const actions = {
         }
       }
       axios.get(`${BASE_URL}paints`, config).then((response) => {
-        commit('updatePaints', response.data)
+        commit('UPDATE_PAINTS', response.data)
         resolve(response)
       }).catch((error) => {
         reject(error)
@@ -55,9 +55,9 @@ const actions = {
 }
 
 const mutations = {
-  updatePaints(state, new_paints) {
+  UPDATE_PAINTS(state, new_paints) {
     state.paints = new_paints
-  }
+  },
 }
 
 export default {
