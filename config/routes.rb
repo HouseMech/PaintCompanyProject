@@ -1,9 +1,12 @@
 Rails.application.routes.draw do
   devise_for :users, controllers: {
-    sessions: 'users/sessions',
-    registrations: 'users/registrations'
+    sessions: "users/sessions",
+    registrations: "users/registrations"
   }
-  get '/user-data', to: 'users#show'
+  get "/user-data", to: "users#show"
+  scope "/admin" do
+    resources :users
+  end
   resources :paints
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
