@@ -17,6 +17,14 @@ const getters = {
 }
 
 const actions = {
+  //updates a single entry based on data received from the pusher service
+  updateLocalPaintEntry({ getters, commit }, { id, colour, status, stock }) {
+    let paintsCopy = getters['paints']
+    let foundIndex = paintsCopy.findIndex((elem) => elem.id == id)
+    let newPaint = { colour: colour, status: status, stock: stock }
+    paintsCopy[foundIndex] = { ...paintsCopy[foundIndex], ...newPaint }
+    commit('UPDATE_PAINTS', paintsCopy)
+  },
   getPaints({ rootGetters, commit }) {
     new Promise((resolve, reject) => {
       const config = {

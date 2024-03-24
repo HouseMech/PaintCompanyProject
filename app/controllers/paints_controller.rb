@@ -30,16 +30,13 @@ class PaintsController < ApplicationController
   def update
     if @paint.update(paint_params)
       Pusher.trigger('paint-channel','update-paint', {
-
-            id: @paint.id,
-
-            colour: @paint.colour,
-
-            status: @paint.status,
-
-            stock: @paint.stock
-
-          })
+        paint: {
+          id: @paint.id,
+          colour: @paint.colour,
+          status: @paint.status,
+          stock: @paint.stock
+        }
+      })
       render json: @paint
     else
       render json: @paint.errors, status: :unprocessable_entity
