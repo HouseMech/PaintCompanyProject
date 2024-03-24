@@ -1,7 +1,10 @@
 <template>
   <v-app-bar :elevation="2">
     <v-app-bar-title>Hello, {{ getUserEmail }}</v-app-bar-title>
-    <div>Current Role: {{ getUserRole }}</div>
+    <div>Role: {{ getUserRole }}</div>
+    <v-btn v-if="getUserRole === 'admin'" icon @click="goToUsers">
+      <v-icon>mdi-security</v-icon>
+    </v-btn>
     <v-btn icon @click="logout">
       <v-icon>mdi-logout</v-icon>
     </v-btn>
@@ -20,6 +23,14 @@ export default {
         replace: true
       })
     },
+    goToUsers() {
+      if (this.getUserRole === 'admin') {
+        this.$router.push({
+          path: '/users',
+          replace: true
+        })
+      }
+    }
   },
   computed: {
     ...mapGetters({ getUserEmail: "sessions/getUserEmail", getUserRole: "sessions/getUserRole", isLoggedIn: "sessions/isLoggedIn" }),

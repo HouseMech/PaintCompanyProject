@@ -3,12 +3,18 @@ import store from '../store'
 
 import DashboardView from '../views/DashboardView.vue'
 import LoginView from '../views/LoginView.vue'
+import UserView from '../views/UserView.vue'
 
 const routes = [
   {
     path: '/',
     component: DashboardView,
     meta: { requiresAuth: true }
+  },
+  {
+    path: '/users',
+    component: UserView,
+    meta: { requiresAdmin: true, requiresAuth: true }
   },
   {
     path: '/login',
@@ -23,17 +29,19 @@ const router = createRouter({
 
 router.beforeEach((to, from, next) => {
   const requiresAuth = to.matched.some((x) => x.meta.requiresAuth)
+  const requiresAdmin = to.matched.some((x) => x.meta.requiresAdmin)
   const isLoggedIn = store.getters['sessions/isLoggedIn']
-  if (requiresAuth) {
-    if (isLoggedIn) {
-      next()
-      return
-    }
+  const userRole = store.getters['sessions/getUserRole']
+  if (requiresAuth && !isLoggedIn) {
     next('/login')
+    return
   }
-  else {
-    next()
+
+  if (requiresAdmin && userRole !== 'admin') {
+    next('/')
+    return;
   }
+  next()
 })
 
 export default router
