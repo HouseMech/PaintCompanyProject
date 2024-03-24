@@ -36,7 +36,7 @@ const getters = {
 
 const actions = {
   loginUser({ commit }, payload) {
-    new Promise((resolve, reject) => {
+    return new Promise((resolve, reject) => {
       axios.post(`${BASE_URL}users/sign_in`, payload).then((response) => {
         commit('SET_USER_INFO', response)
         resolve(response)
