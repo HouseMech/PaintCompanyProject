@@ -2,9 +2,14 @@
   <v-app-bar :elevation="2">
     <v-app-bar-title>Hello, {{ getUserEmail }}</v-app-bar-title>
     <div>Role: {{ getUserRole }}</div>
-    <v-btn v-if="getUserRole === 'admin'" icon @click="goToUsers">
-      <v-icon>mdi-security</v-icon>
-    </v-btn>
+    <div v-if="getUserRole === 'admin'">
+      <v-btn v-if="this.$router.currentRoute.value.name !== 'users'" icon @click="goToUsers">
+        <v-icon>mdi-security</v-icon>
+      </v-btn>
+      <v-btn v-else icon @click="goToDashboard">
+        <v-icon>mdi-view-dashboard</v-icon>
+      </v-btn>
+    </div>
     <v-btn icon @click="logout">
       <v-icon>mdi-logout</v-icon>
     </v-btn>
@@ -30,6 +35,12 @@ export default {
           replace: true
         })
       }
+    },
+    goToDashboard() {
+      this.$router.push({
+        path: '/',
+        replace: true
+      })
     }
   },
   computed: {

@@ -2,7 +2,7 @@
   <div>
     <div v-for="user in users" :key="user.id">
       {{ user.email }}, {{ user.role }}, {{ user.is_active }}
-      <v-btn small @click="editUser(user)">Edit</v-btn>
+      <v-btn small color="blue-darken-4" @click="editUser(user)">Edit</v-btn>
     </div>
     <v-dialog v-model="dialog" persistent max-width="600px">
       <v-card>

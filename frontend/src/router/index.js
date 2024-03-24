@@ -8,16 +8,19 @@ import UserView from '../views/UserView.vue'
 const routes = [
   {
     path: '/',
+    name: 'dashboard',
     component: DashboardView,
     meta: { requiresAuth: true }
   },
   {
     path: '/users',
+    name: 'users',
     component: UserView,
     meta: { requiresAdmin: true, requiresAuth: true }
   },
   {
     path: '/login',
+    name: 'login',
     component: LoginView
   },
 ]
