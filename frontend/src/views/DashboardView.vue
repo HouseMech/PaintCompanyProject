@@ -5,7 +5,7 @@
 </template>
 
 <script>
-import Pusher from 'pusher-js';
+import Pusher from 'pusher-js'
 export default {
   methods: {
     getPaints() {
@@ -18,17 +18,16 @@ export default {
     }
   },
   created() {
-    var pusher = new Pusher('APP_KEY', {
-      cluster: 'CLUSTER',
+    var pusher = new Pusher('5966b6fdb432f7002104', {
+      cluster: 'us3',
       encrypted: true
-    });
+    })
 
-    var channel = pusher.subscribe('paint-channel');
+    var channel = pusher.subscribe('paint-channel')
     channel.bind('update-paint', (data) => {
       // Handle the received message
       this.$store.dispatch('paints/updateLocalPaintEntry', data.paint)
-      console.log(data.paint);
-    });
+    })
   },
   mounted() {
     this.getPaints()
