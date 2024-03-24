@@ -7,13 +7,14 @@
       <div>{{ this.getAuthToken }}</div>
     </div>
     <div v-else>
-      <form @submit="onLogin" class="login-form">
-        <input class="login-form-email" type="text" v-model="loginEmail" placeholder="Email" />
-        <br />
-        <input class="login-form-password" type="password" v-model="loginPassword" placeholder="Password" />
-        <br />
-        <input type="submit" value="Login" class="login-form-submit" />
-      </form>
+      <v-form @submit.prevent="onLogin">
+        <v-text-field v-model="loginEmail" label="Email"></v-text-field>
+
+        <v-text-field v-model="loginPassword" :append-icon="showPassword ? 'mdi-eye' : 'mdi-eye-off'"
+          :type="showPassword ? 'text' : 'password'" counter placeholder="Password"
+          @click:append="showPassword = !showPassword"></v-text-field>
+        <v-btn class="mt-2" type="submit" color="blue-darken-4" block>Submit</v-btn>
+      </v-form>
     </div>
   </div>
 </template>
@@ -23,6 +24,7 @@ import { mapActions, mapGetters } from 'vuex'
 export default {
   data() {
     return {
+      showPassword: false,
       loginEmail: "",
       loginPassword: ""
     }
