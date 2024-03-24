@@ -66,6 +66,9 @@ const mutations = {
   UPDATE_PAINTS(state, new_paints) {
     state.paints = new_paints
   },
+  RESET_STATE(state) {
+    Object.assign(state, getDefaultState())
+  },
 }
 
 export default {

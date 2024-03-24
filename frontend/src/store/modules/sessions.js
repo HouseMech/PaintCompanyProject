@@ -54,6 +54,9 @@ const actions = {
     new Promise((resolve, reject) => {
       axios.delete(`${BASE_URL}users/sign_out`, config).then(() => {
         commit('RESET_USER_INFO')
+        commit("paints/RESET_STATE", null, {
+          root: true
+        })
         resolve()
       }).catch((error) => {
         reject(error)
