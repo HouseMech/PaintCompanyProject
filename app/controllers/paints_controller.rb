@@ -1,6 +1,8 @@
 class PaintsController < ApplicationController
   before_action :authenticate_user!
   before_action :set_paint, only: %i[ show update destroy ]
+  before_action :check_painter, only: [:update]
+  before_action :check_admin, only: [:destroy]
 
 
   # GET /paints
@@ -57,5 +59,13 @@ class PaintsController < ApplicationController
     # Only allow a list of trusted parameters through.
     def paint_params
       params.require(:paint).permit(:status, :stock)
+    end
+
+    def check_painter
+      render json: { error: "Not authorized" }, status: :forbidden unless current_user.painter? || current_user.admin?
+    end
+
+    def check_admin
+      render json: { error: "Not authorized" }, status: :forbidden unless current_user.admin?
     end
 end
