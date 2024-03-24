@@ -18,6 +18,3 @@ admin:
   email: admin@example.com
   encrypted_password: <%= Devise::Encryptor.digest(User, 'password') %>
   role: 2 #admin
-#
-two: {}
-# column: value
