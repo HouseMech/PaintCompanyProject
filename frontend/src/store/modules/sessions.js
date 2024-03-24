@@ -28,6 +28,9 @@ const getters = {
   isLoggedIn(state) {
     const loggedOut = state.auth_token == null || state.auth_token == JSON.stringify(null)
     return !loggedOut
+  },
+  getUserRole() {
+    return state.user?.role
   }
 }
 

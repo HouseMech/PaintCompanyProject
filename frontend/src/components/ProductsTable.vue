@@ -53,7 +53,7 @@
     <template v-slot:item.status="{ value }">
       <StatusChip :status="value" />
     </template>
-    <template v-slot:item.actions="{ item }">
+    <template v-if="showEditIfPainterOrAdmin()" v-slot:item.actions="{ item }">
       <v-icon class="me-2" size="small" @click="editItem(item)">
         mdi-pencil
       </v-icon>
@@ -91,6 +91,13 @@ export default {
     }
   },
   methods: {
+    showEditIfPainterOrAdmin() {
+      let currentRole = this.$store.getters['sessions/getUserRole']
+      if (currentRole === 'painter' || currentRole === 'admin') {
+        return true
+      }
+      return false
+    },
     editItem(item) {
       this.editedIndex = item.id
       this.editedItem = Object.assign({}, item)
