@@ -8,7 +8,8 @@ class UsersController < ApplicationController
   end
 
   def update
-    if @user.update(paint_params)
+    @user = User.find(params[:id])
+    if @user.update(user_params)
 
       render json: @user
     else
@@ -16,18 +17,16 @@ class UsersController < ApplicationController
     end
   end
 
+  # Used to keep the user signed in via token in localstorage
   def show
     user = user_from_token
     render json: {
-      message: "test",
+      message: "Token still valid",
       user: user
     }
   end
 
   private
-  def set_user
-    @user = User.find(params[:id])
-  end
 
   def user_params
     params.require(:user).permit(:role, :is_active)
