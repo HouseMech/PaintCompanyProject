@@ -1,6 +1,6 @@
 class PaintsController < ApplicationController
   before_action :authenticate_user!
-  before_action :set_paint, only: %i[ show update destroy ]
+  before_action :set_paint, only: %i[ update ]
   before_action :check_painter, only: [:update]
 
 
