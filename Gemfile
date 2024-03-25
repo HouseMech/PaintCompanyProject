@@ -43,6 +43,10 @@ end
 group :development do
   # Speed up commands on slow machines / big apps [https://github.com/rails/spring]
   # gem "spring"
+  gem "capistrano"
+  gem "capistrano-rvm"
+  gem "capistrano-rails"
+  gem "capistrano-passenger"
 end
 
 
@@ -54,3 +58,5 @@ gem "rack-cors", "~> 2.0"
 gem "pusher", "~> 2.0"
 
 gem "byebug", "~> 11.1", :groups => [:development, :test]
+gem "ed25519"
+gem "bcrypt_pbkdf"
