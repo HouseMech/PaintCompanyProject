@@ -47,7 +47,7 @@ const actions = {
           authorization: rootGetters['sessions/getAuthToken']
         }
       }
-      axios.patch(`${BASE_URL}/paints/${id}`, {
+      axios.patch(`${BASE_URL}paints/${id}`, {
         paint: {
           status: status,
           stock: stock
