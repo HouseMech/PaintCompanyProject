@@ -1,9 +1,12 @@
 <template>
-  <div>
-    <div v-for="user in users" :key="user.id">
-      {{ user.email }}, {{ user.role }}, {{ user.is_active }}
-      <v-btn small color="blue-darken-4" @click="editUser(user)">Edit</v-btn>
-    </div>
+  <div class="d-flex align-center flex-column">
+    <v-data-table :headers="headers" :items="users">
+      <template v-slot:item.actions="{ item }">
+        <v-icon class="me-2" size="small" @click="editUser(item)">
+          mdi-pencil
+        </v-icon>
+      </template>
+    </v-data-table>
     <v-dialog v-model="dialog" persistent max-width="600px">
       <v-card>
         <v-card-title>
@@ -11,13 +14,22 @@
         </v-card-title>
         <v-card-text>
           <v-container>
-            <v-form ref="form" v-model="valid" lazy-validation>
-              <v-select v-model="editableUser.role" :items="roles" item-value="value" item-text="text" label="Role"
-                required></v-select>
+            <v-row v-if="formError">
+              <v-col>
+                <v-alert color="error" icon="$error" :text="formError"></v-alert>
+              </v-col>
+            </v-row>
+            <v-row>
+              <v-col>
+                <v-form ref="form" v-model="valid" lazy-validation>
+                  <v-select v-model="editableUser.role" :items="roles" item-value="value" item-text="text" label="Role"
+                    required></v-select>
 
-              <v-switch v-model="editableUser.is_active"
-                :label="editableUser.is_active ? 'Active' : 'Disabled'"></v-switch>
-            </v-form>
+                  <v-switch v-model="editableUser.is_active"
+                    :label="editableUser.is_active ? 'Active' : 'Disabled'"></v-switch>
+                </v-form>
+              </v-col>
+            </v-row>
           </v-container>
         </v-card-text>
         <v-card-actions>
@@ -51,6 +63,13 @@ export default {
         email: value => /.+@.+\..+/.test(value) || 'E-mail must be valid.',
       },
       roles: ['default', 'painter', 'admin'],
+      headers: [
+        { title: 'Email', align: 'start', key: 'email' },
+        { title: 'Role', align: 'end', key: 'role' },
+        { title: 'Active', align: 'end', key: 'is_active' },
+        { title: 'Actions', align: 'end', key: 'actions' }
+      ],
+      formError: ''
     }
   },
   methods: {
@@ -81,14 +100,15 @@ export default {
             is_active: this.editableUser.is_active,
           },
         ).then(() => {
-          this.dialog = false
-        }).catch(error => {
-          console.error('Update failed:', error)
+          this.closeDialog()
+        }).catch((error) => {
+          this.formError = "Error " + JSON.stringify(error.message || error.response.data)
         })
       }
     },
 
     closeDialog() {
+      this.formError = ''
       this.dialog = false
     },
   },
