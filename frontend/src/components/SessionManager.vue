@@ -5,6 +5,9 @@
     </v-row>
     <v-row>
       <v-col>
+        <v-row v-if="formError">
+          <v-alert color="error" icon="$error" :text="formError"></v-alert>
+        </v-row>
         <v-form v-model="form" @submit.prevent="onLogin">
           <v-text-field v-model="loginEmail" :rules="[rules.required]" label="Email"></v-text-field>
 
