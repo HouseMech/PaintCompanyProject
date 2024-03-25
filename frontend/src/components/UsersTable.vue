@@ -60,7 +60,6 @@ export default {
       },
       rules: {
         required: value => !!value || 'Required.',
-        email: value => /.+@.+\..+/.test(value) || 'E-mail must be valid.',
       },
       roles: ['default', 'painter', 'admin'],
       headers: [
@@ -73,7 +72,7 @@ export default {
     }
   },
   methods: {
-    ...mapActions({ updateUser: 'admin/updateUser' }), // Assuming 'updateUser' is an action in your Vuex store
+    ...mapActions({ updateUser: 'admin/updateUser', getUsers: 'admin/getUsers' }),
 
     editUser(user) {
       this.editableUser.id = user.id
@@ -101,6 +100,7 @@ export default {
           },
         ).then(() => {
           this.closeDialog()
+          this.getUsers()
         }).catch((error) => {
           this.formError = "Error " + JSON.stringify(error.message || error.response.data)
         })
@@ -115,6 +115,4 @@ export default {
 }
 </script>
 
-<style>
-/* Add any additional styles if needed */
-</style>
+<style scoped></style>
