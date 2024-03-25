@@ -2,7 +2,6 @@ class PaintsController < ApplicationController
   before_action :authenticate_user!
   before_action :set_paint, only: %i[ show update destroy ]
   before_action :check_painter, only: [:update]
-  before_action :check_admin, only: [:destroy]
 
 
   # GET /paints
@@ -15,17 +14,6 @@ class PaintsController < ApplicationController
   # GET /paints/1
   def show
     render json: @paint
-  end
-
-  # POST /paints
-  def create
-    @paint = Paint.new(paint_params)
-
-    if @paint.save
-      render json: @paint, status: :created, location: @paint
-    else
-      render json: @paint.errors, status: :unprocessable_entity
-    end
   end
 
   # PATCH/PUT /paints/1
@@ -43,11 +31,6 @@ class PaintsController < ApplicationController
     else
       render json: @paint.errors, status: :unprocessable_entity
     end
-  end
-
-  # DELETE /paints/1
-  def destroy
-    @paint.destroy!
   end
 
   private
