@@ -6,16 +6,13 @@
 
 <script>
 import Pusher from 'pusher-js'
+import { mapActions, mapGetters } from 'vuex'
 export default {
   methods: {
-    getPaints() {
-      this.$store.dispatch('paints/getPaints')
-    }
+    ...mapActions({ getPaints: 'paints/getPaints' }),
   },
   computed: {
-    paints() {
-      return this.$store.getters['paints/paints']
-    }
+    ...mapGetters({ paints: 'paints/paints' }),
   },
   created() {
     var pusher = new Pusher(import.meta.env["VITE_pusher_key"], {
