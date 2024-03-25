@@ -58,3 +58,5 @@ gem "rack-cors", "~> 2.0"
 gem "pusher", "~> 2.0"
 
 gem "byebug", "~> 11.1", :groups => [:development, :test]
+gem "ed25519"
+gem "bcrypt_pbkdf"
